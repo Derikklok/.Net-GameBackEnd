@@ -4,5 +4,5 @@ namespace GameStore.Endpoints;
 
 public class GamesEndpoints
 {
-
+    
 }
