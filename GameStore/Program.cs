@@ -38,9 +38,9 @@ app.MapGet("games/{id}", (int id) =>
 
     GameDto? game = games.Find(game => game.Id == id);
 
-    
+    return game is null ? Results.NotFound() : Results.Ok(game);
 }
-    
+
     ).WithName(GetGameEndpointName);
 
 // POST
@@ -63,7 +63,7 @@ app.MapPost("games", (CreateGameDto newGame) =>
 
 // Update games - if you do not provide all the values values will be resetted.
 // We can not update only one single value given in the body of the request
-app.MapPut("games/{id}",(int id , UpdateGameDto updateGame)=>
+app.MapPut("games/{id}", (int id, UpdateGameDto updateGame) =>
 {
     var index = games.FindIndex(game => game.Id == id);
     games[index] = new GameDto(
@@ -79,7 +79,7 @@ app.MapPut("games/{id}",(int id , UpdateGameDto updateGame)=>
 
 
 //  Delete games/{id}
-app.MapDelete("games/{id}",(int id)=>
+app.MapDelete("games/{id}", (int id) =>
 {
     games.RemoveAll(game => game.Id == id);
 
