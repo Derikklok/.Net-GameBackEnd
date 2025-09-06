@@ -26,3 +26,4 @@ C:\Users\User\Desktop\Programming\ASP\GamesProject\GameStore\obj\Debug\net9.0\re
 C:\Users\User\Desktop\Programming\ASP\GamesProject\GameStore\obj\Debug\net9.0\GameStore.pdb
 C:\Users\User\Desktop\Programming\ASP\GamesProject\GameStore\obj\Debug\net9.0\GameStore.genruntimeconfig.cache
 C:\Users\User\Desktop\Programming\ASP\GamesProject\GameStore\obj\Debug\net9.0\ref\GameStore.dll
+C:\Users\User\Desktop\Programming\ASP\GamesProject\GameStore\obj\Debug\net9.0\GameStore.sourcelink.json
