@@ -1,5 +1,3 @@
-using System.Net.WebSockets;
-using GameStore.DTOs;
 using GameStore.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
