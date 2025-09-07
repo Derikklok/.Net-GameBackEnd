@@ -33,7 +33,7 @@ public static class GamesEndpoints
 
     public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("games");
+        var group = app.MapGroup("games").WithParameterValidation();
         group.MapGet("/", () => games);
 
         // If no value is available for an id then it output -> null
@@ -62,7 +62,7 @@ public static class GamesEndpoints
 
             return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game);
 
-        }).WithParameterValidation();
+        });
 
 
         // Update games - if you do not provide all the values values will be resetted.
