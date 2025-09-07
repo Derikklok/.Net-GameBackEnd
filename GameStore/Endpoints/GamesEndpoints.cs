@@ -62,7 +62,7 @@ public static class GamesEndpoints
 
             return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game);
 
-        });
+        }).WithParameterValidation();
 
 
         // Update games - if you do not provide all the values values will be resetted.
