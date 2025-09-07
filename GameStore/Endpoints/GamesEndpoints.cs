@@ -31,12 +31,13 @@ public static class GamesEndpoints
     )
 ];
 
-    public static WebApplication MapGamesEndpoints(this WebApplication app)
+    public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
     {
-        app.MapGet("games", () => games);
+        var group = app.MapGroup("games");
+        group.MapGet("/", () => games);
 
         // If no value is available for an id then it output -> null
-        app.MapGet("games/{id}", (int id) =>
+        group.MapGet("/{id}", (int id) =>
         {
 
             GameDto? game = games.Find(game => game.Id == id);
@@ -47,7 +48,7 @@ public static class GamesEndpoints
             ).WithName(GetGameEndpointName);
 
         // POST
-        app.MapPost("games", (CreateGameDto newGame) =>
+        group.MapPost("/", (CreateGameDto newGame) =>
         {
             GameDto game = new(
                 games.Count + 1,
@@ -66,7 +67,7 @@ public static class GamesEndpoints
 
         // Update games - if you do not provide all the values values will be resetted.
         // We can not update only one single value given in the body of the request
-        app.MapPut("games/{id}", (int id, UpdateGameDto updateGame) =>
+        group.MapPut("/{id}", (int id, UpdateGameDto updateGame) =>
         {
             var index = games.FindIndex(game => game.Id == id);
 
@@ -88,13 +89,13 @@ public static class GamesEndpoints
 
 
         //  Delete games/{id}
-        app.MapDelete("games/{id}", (int id) =>
+        group.MapDelete("/{id}", (int id) =>
         {
             games.RemoveAll(game => game.Id == id);
 
             return Results.NoContent();
         });
 
-        return app;
+        return group;
     }
 }
