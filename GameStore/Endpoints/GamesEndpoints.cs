@@ -12,7 +12,7 @@ public static class GamesEndpoints
         1,
         "Street Fighter 2",
         "Action",
-        20.45M,
+        20.46M,
         new DateOnly(1992,7,23)
     ),
     new(
