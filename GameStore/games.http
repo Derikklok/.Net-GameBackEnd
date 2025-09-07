@@ -3,7 +3,7 @@ GET http://localhost:5251
 HTTP/1.1 200  - OK
 connection: close
 content-type: text/plain; charset=utf-8
-date: Sat, 06 Sep 2025 04:34:42 GMT
+date: Sun, 07 Sep 2025 16:20:42 GMT
 server: Kestrel
 transfer-encoding: chunked
 ###
@@ -12,7 +12,7 @@ GET http://localhost:5251/games
 HTTP/1.1 200  - OK
 connection: close
 content-type: application/json; charset=utf-8
-date: Sat, 06 Sep 2025 04:34:52 GMT
+date: Sun, 07 Sep 2025 16:20:42 GMT
 server: Kestrel
 transfer-encoding: chunked
 ###
@@ -21,18 +21,17 @@ GET http://localhost:5251/games/3
 HTTP/1.1 200  - OK
 connection: close
 content-type: application/json; charset=utf-8
-date: Sat, 06 Sep 2025 04:34:47 GMT
+date: Sun, 07 Sep 2025 16:20:42 GMT
 server: Kestrel
 transfer-encoding: chunked
 ###
 GET http://localhost:5251/games/4
 
-HTTP/1.1 200  - OK
+HTTP/1.1 404  - Not Found
+content-length: 0
 connection: close
-content-type: application/json; charset=utf-8
-date: Sat, 06 Sep 2025 04:34:42 GMT
+date: Sun, 07 Sep 2025 16:20:43 GMT
 server: Kestrel
-transfer-encoding: chunked
 ###
 POST http://localhost:5251/games
 Content-Type:application/json
@@ -46,7 +45,7 @@ Content-Type:application/json
 HTTP/1.1 201  - Created
 connection: close
 content-type: application/json; charset=utf-8
-date: Sat, 06 Sep 2025 04:34:42 GMT
+date: Sun, 07 Sep 2025 16:20:43 GMT
 server: Kestrel
 location: http://localhost:5251/games/4
 transfer-encoding: chunked
