@@ -1,0 +1,25 @@
+# Ignore appsettings files with sensitive data
+appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+appsettings.*.json
+
+# General .NET Core
+bin/
+obj/
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.dbmdl
+*.jfm
+*.pfx
+*.publishsettings
+
+# Logs
+logs/
+*.log
+
+# Node modules if using any frontend frameworks
+node_modules/
