@@ -17,6 +17,8 @@ builder.Services.AddControllers();
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
+app.MapGet("/test", () => "This is a test endpoint");
 app.MapGamesEndpoints();
+app.MapControllers(); // Add this line to enable controller routing
 
 app.Run();

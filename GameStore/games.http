@@ -50,3 +50,17 @@ date: Sun, 07 Sep 2025 16:53:33 GMT
 server: Kestrel
 location: http://localhost:5251/games/5
 transfer-encoding: chunked
+###
+POST http://localhost:5251/api/tasks
+Content-Type:application/json
+{
+  "title": "Learn ASP.NET",
+  "description": "Understand Web API basics",
+  "isCompleted": false
+}
+
+HTTP/1.1 404  - Not Found
+content-length: 0
+connection: close
+date: Sun, 14 Sep 2025 07:23:26 GMT
+server: Kestrel
