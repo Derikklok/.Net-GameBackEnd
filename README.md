@@ -129,12 +129,94 @@ public class TaskItem
 }
 ```
 
+### Review Model
+
+```csharp
+public class Review
+{
+    public int Id { get; set; }
+    public int GameId { get; set; }
+    public required string UserName { get; set; }
+    public required string Comment { get; set; }
+    public int Rating { get; set; } // 1-5 star rating
+    public DateTime CreatedDate { get; set; } = DateTime.Now;
+}
+```
+
 ## Notes for Developers
 
 - The game endpoints use minimal API syntax with a MapGroup approach
 - The task endpoints use the traditional controller-based approach
 - The application uses Entity Framework Core for data persistence with MySQL
 - Game data is currently stored in-memory (list), while task data is persisted to the database
+
+## Database Migrations
+
+### Adding a New Model
+
+When you want to add a new model to your application and update the database schema, follow these steps:
+
+1. **Create a new model class** in the `Models` folder
+2. **Add a DbSet property** in `AppDbContext.cs`
+3. **Create and apply a migration** using Entity Framework Core commands
+
+#### Example: Adding a Review Model
+
+```csharp
+// 1. Create Models/Review.cs
+public class Review
+{
+    public int Id { get; set; }
+    public int GameId { get; set; }
+    public required string UserName { get; set; }
+    public required string Comment { get; set; }
+    public int Rating { get; set; }
+    public DateTime CreatedDate { get; set; } = DateTime.Now;
+}
+
+// 2. Update AppDbContext.cs
+public class AppDbContext : DbContext
+{
+    // ...existing code...
+    public DbSet<Review> Reviews { get; set; }
+}
+```
+
+3. **Create and apply the migration**:
+
+```bash
+# Generate migration files
+dotnet ef migrations add AddReviewsTable
+
+# Apply migration to database
+dotnet ef database update
+```
+
+### Common Migration Commands
+
+```bash
+# List all migrations
+dotnet ef migrations list
+
+# Create a new migration
+dotnet ef migrations add [MigrationName]
+
+# Apply pending migrations
+dotnet ef database update
+
+# Revert to a specific migration
+dotnet ef database update [MigrationName]
+
+# Remove the last migration (if not applied)
+dotnet ef migrations remove
+
+# Generate SQL script (without applying)
+dotnet ef migrations script
+
+# Drop and recreate the database
+dotnet ef database drop --force
+dotnet ef database update
+```
 
 ## Troubleshooting
 
