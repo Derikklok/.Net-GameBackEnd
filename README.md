@@ -35,15 +35,25 @@ dotnet restore
 
 ## Database Configuration
 
-The application is configured to use MySQL. The connection string is defined in `appsettings.json`:
+The application is configured to use MySQL. The connection string should be set in your `appsettings.json` file.
 
+### Setting up your appsettings.json
+
+1. Copy the template file:
+```bash
+cp GameStore/appsettings.template.json GameStore/appsettings.json
+```
+
+2. Edit the `appsettings.json` file with your database credentials:
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "server=localhost;database=taskmanagerdb;user=root;password=sachin1605"
+    "DefaultConnection": "server=localhost;database=taskmanagerdb;user=YOUR_USERNAME;password=YOUR_PASSWORD"
   }
 }
 ```
+
+> **Security Note:** The `appsettings.json` file is excluded from version control to protect sensitive information. Never commit this file with actual credentials.
 
 ### Set Up the Database
 
