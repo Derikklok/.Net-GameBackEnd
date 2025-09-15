@@ -25,41 +25,41 @@ public class CitizensController : ControllerBase
         var citizens = await _context.Citizens
             .Include(c => c.Applications)
             .ToListAsync();
-            
+
         return citizens.Select(CitizenDto.FromCitizen).ToList();
     }
-    
+
     // GET: api/citizens/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CitizenDto>> GetCitizen(int id)
-        {
-            var citizen = await _context.Citizens
-                .Include(c => c.Applications)
-                .FirstOrDefaultAsync(c => c.Id == id);
+    [HttpGet("{id}")]
+    public async Task<ActionResult<CitizenDto>> GetCitizen(int id)
+    {
+        var citizen = await _context.Citizens
+            .Include(c => c.Applications)
+            .FirstOrDefaultAsync(c => c.Id == id);
 
-            if (citizen == null)
-                return NotFound();
+        if (citizen == null)
+            return NotFound();
 
-            return CitizenDto.FromCitizen(citizen);
-        }
+        return CitizenDto.FromCitizen(citizen);
+    }
 
-     // POST: api/citizens
+    // POST: api/citizens
     [HttpPost]
-        public async Task<ActionResult<CitizenDto>> AddCitizen(CreateCitizenDto citizenDto)
+    public async Task<ActionResult<CitizenDto>> AddCitizen(CreateCitizenDto citizenDto)
+    {
+        var citizen = new Citizen
         {
-            var citizen = new Citizen
-            {
-                FullName = citizenDto.FullName,
-                NIC = citizenDto.NIC,
-                Address = citizenDto.Address,
-                ContactNumber = citizenDto.ContactNumber,
-                Applications = new List<Application>() // Initialize with empty list
-            };
-            
-            _context.Citizens.Add(citizen);
-            await _context.SaveChangesAsync();
-            
-            var createdCitizenDto = CitizenDto.FromCitizen(citizen);
-            return CreatedAtAction(nameof(GetCitizen), new { id = citizen.Id }, createdCitizenDto);
-        }
+            FullName = citizenDto.FullName,
+            NIC = citizenDto.NIC,
+            Address = citizenDto.Address,
+            ContactNumber = citizenDto.ContactNumber,
+            Applications = new List<Application>() // Initialize with empty list
+        };
+
+        _context.Citizens.Add(citizen);
+        await _context.SaveChangesAsync();
+
+        var createdCitizenDto = CitizenDto.FromCitizen(citizen);
+        return CreatedAtAction(nameof(GetCitizen), new { id = citizen.Id }, createdCitizenDto);
+    }
 }
