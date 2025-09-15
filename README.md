@@ -12,6 +12,9 @@ A RESTful API for managing video games and tasks built with ASP.NET Core 9.0.
   - [Game Endpoints](#game-endpoints)
   - [Task Endpoints](#task-endpoints)
   - [Test Endpoints](#test-endpoints)
+  - [Citizens Endpoints](#citizens-endpoints)
+  - [Officers Endpoints](#officers-endpoints)
+- [Architecture Overview](#architecture-overview)
 
 ## Setup & Installation
 
@@ -249,3 +252,67 @@ dotnet ef database update
    - Ensure the application is running
    - Check that you're using the correct URL and HTTP method
    - Verify that controller routing is enabled in Program.cs (`app.MapControllers()`)
+
+### Citizens Endpoints
+
+| Method | Endpoint | Description | Example Request | Example Response |
+|--------|----------|-------------|----------------|------------------|
+| GET    | `/api/citizens` | Returns a list of all citizens with their applications | `GET /api/citizens` | `[{"id":1,"fullName":"John Doe","nic":"123456789X","address":"123 Main St","contactNumber":"555-1234","applications":[...]},...]` |
+| GET    | `/api/citizens/{id}` | Returns a specific citizen by ID | `GET /api/citizens/1` | `{"id":1,"fullName":"John Doe","nic":"123456789X","address":"123 Main St","contactNumber":"555-1234","applications":[...]}` |
+| POST   | `/api/citizens` | Creates a new citizen | `POST /api/citizens` <br> Body: `{"fullName":"Jane Smith","nic":"987654321Y","address":"456 Oak St","contactNumber":"555-5678"}` | `{"id":2,"fullName":"Jane Smith","nic":"987654321Y","address":"456 Oak St","contactNumber":"555-5678","applications":[]}` |
+| PUT    | `/api/citizens/{id}` | Updates a specific citizen | `PUT /api/citizens/1` <br> Body: `{"fullName":"John Smith"}` | `{"id":1,"fullName":"John Smith","nic":"123456789X","address":"123 Main St","contactNumber":"555-1234","applications":[...]}` |
+| DELETE | `/api/citizens/{id}` | Deletes a specific citizen | `DELETE /api/citizens/1` | `204 No Content` |
+
+### Officers Endpoints
+
+| Method | Endpoint | Description | Example Request | Example Response |
+|--------|----------|-------------|----------------|------------------|
+| GET    | `/api/officers` | Returns a list of all officers with their assigned applications | `GET /api/officers` | `[{"id":1,"fullName":"Prakash Jayweera","department":"Accounts","applications":[...]},...]` |
+| GET    | `/api/officers/{id}` | Returns a specific officer by ID | `GET /api/officers/1` | `{"id":1,"fullName":"Prakash Jayweera","department":"Accounts","applications":[...]}` |
+| POST   | `/api/officers` | Creates a new officer | `POST /api/officers` <br> Body: `{"fullName":"Prakash Jayweera","department":"Accounts"}` | `{"id":1,"fullName":"Prakash Jayweera","department":"Accounts","applications":[]}` |
+| PUT    | `/api/officers/{id}` | Updates a specific officer | `PUT /api/officers/1` <br> Body: `{"department":"Finance"}` | `{"id":1,"fullName":"Prakash Jayweera","department":"Finance","applications":[...]}` |
+| DELETE | `/api/officers/{id}` | Deletes a specific officer | `DELETE /api/officers/1` | `204 No Content` |
+
+## Architecture Overview
+
+### Data Transfer Objects (DTOs)
+
+This project uses DTOs to separate the API contract from the internal data models. This provides several benefits:
+
+1. **Data Protection**: Prevents exposing sensitive fields or internal implementation details
+2. **Flexibility**: Allows the API contract to evolve independently from the database schema
+3. **Validation**: Enables specific validation rules for different operations
+4. **Optimization**: Reduces data transfer by only including necessary fields
+
+#### DTO Types:
+
+1. **Response DTOs** (e.g., `CitizenDto`, `OfficerDto`): Used for sending data to clients
+2. **Create DTOs** (e.g., `CreateCitizenDto`, `CreateOfficerDto`): Used for creating new resources
+3. **Update DTOs** (e.g., `UpdateCitizenDto`, `UpdateOfficerDto`): Used for updating existing resources with nullable properties
+
+### Entity Framework Core with Repository Pattern
+
+The application uses Entity Framework Core as its ORM (Object-Relational Mapper) with the Repository Pattern:
+
+1. **DbContext**: `AppDbContext` manages the database connection and entity sets
+2. **Models**: Define the structure of database tables
+3. **Controllers**: Handle HTTP requests and use the DbContext to perform CRUD operations
+4. **Migrations**: Track and apply database schema changes
+
+### RESTful API Design
+
+The API follows RESTful conventions:
+
+1. **Resources**: Represented by nouns (citizens, officers, applications)
+2. **HTTP Methods**: Used appropriately (GET, POST, PUT, DELETE)
+3. **Status Codes**: Standard HTTP status codes (200, 201, 204, 400, 404, etc.)
+4. **Relationships**: Represented through nested resources and navigation properties
+
+### Key C# Features Used
+
+1. **Async/Await**: All database operations use asynchronous programming
+2. **Dependency Injection**: Services are injected into controllers
+3. **Entity Navigation Properties**: Define relationships between entities
+4. **Nullable Reference Types**: Used in Update DTOs to indicate optional fields
+5. **Records** (for some DTOs): Immutable data transfer objects
+6. **Static Methods**: Used for mapping between entities and DTOs
