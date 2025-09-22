@@ -22,14 +22,21 @@ namespace GameStore.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Driver>>> GetDrivers()
         {
-            return await _context.Drivers.ToListAsync();
+            return await _context.Drivers
+                .Include(d => d.Participations)
+                .ThenInclude(p => p.GrandPrix)
+                .ToListAsync();
         }
 
         // GET : api/drivers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Driver>> GetDriver(int id)
         {
-            var driver = await _context.Drivers.FindAsync(id);
+            var driver = await _context.Drivers
+                .Include(d => d.Participations)
+                .ThenInclude(p => p.GrandPrix)
+                .FirstOrDefaultAsync(d => d.Id == id);
+                
             if (driver == null) return NotFound();
             return driver;
         }
