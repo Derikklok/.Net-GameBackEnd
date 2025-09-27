@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace GameStore.Models
 {
@@ -11,6 +12,7 @@ namespace GameStore.Models
         public string Acronym { get; set; } = null!;
         public string? TeamName { get; set; }
 
+        [JsonIgnore]
         public ICollection<Participation> Participations { get; set; } = new List<Participation>();
     }
 }

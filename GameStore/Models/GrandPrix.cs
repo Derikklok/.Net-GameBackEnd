@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace GameStore.Models
 {
@@ -10,6 +11,7 @@ namespace GameStore.Models
         public int? Laps { get; set; }
         public double? Length { get; set; }
 
+        [JsonIgnore]
         public ICollection<Participation> Participations { get; set; } = new List<Participation>();
     }
 }
